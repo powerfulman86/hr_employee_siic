@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="siic_view_employee_filter" model="ir.ui.view">
+            <field name="name">hr.employee</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="replace">
+                    <field name="name" string="Employee"
+                           filter_domain="['|','|','|', ('work_email', 'ilike', self), ('code', 'ilike', self), ('identification_id', 'ilike', self), ('name', 'ilike', self)]"/>
+                </xpath>
+                <xpath expr="//field[@name='job_id']" position="after">
+                    <field name="identification_id"/>
+                    <field name="code"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="siic_view_employee_form" model="ir.ui.view">
+            <field name="name">hr.employee</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='address_id']/.." position="after">
+                    <group string="Work">
+                        <field name="hire_date"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//field[@name='job_title']/.." position="after">
+                    <h3>
+                        <field name="code" placeholder="Employee Code"/>
+                    </h3>
+                </xpath>
+
+                <xpath expr="//field[@name='birthday']" position="after">
+                    <label for="age"/>
+                    <div class="o_row">
+                        <field name="age"/>
+                        Years
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
