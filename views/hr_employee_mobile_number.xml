@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Telecom Company  -->
+        <record id="telecom_company_view_tree" model="ir.ui.view">
+            <field name="name">mobile.company.view.tree</field>
+            <field name="model">telecom.company</field>
+            <field name="arch" type="xml">
+                <tree string="Telecom Company" editable="top">
+                    <field name="name"/>
+                    <field name="company_id"/>
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="telecom_company_action" model="ir.actions.act_window">
+            <field name="name">Telecom Company</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">telecom.company</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_telecom_company"
+                  name="Telecom Company"
+                  parent="hr.menu_human_resources_configuration"
+                  action="telecom_company_action"/>
+
+        <!-- Mobile Numbers -->
+        <record id="mobile_number_view_search" model="ir.ui.view">
+            <field name="name">mobile.number.view.search</field>
+            <field name="model">employee.mobile.number</field>
+            <field name="arch" type="xml">
+                <search string="Work-Order">
+                    <field name="employee_id"/>
+                    <field name="mobile_company_id"/>
+                    <field name="name"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Employee" name="employee" context="{'group_by': 'employee_id'}"/>
+                        <filter string="Company" name="Company" context="{'group_by': 'mobile_company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="mobile_number_view_form" model="ir.ui.view">
+            <field name="name">mobile.number.view.form</field>
+            <field name="model">employee.mobile.number</field>
+            <field name="arch" type="xml">
+                <form string="Mobile Number Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="name"/>
+                                <field name="mobile_company_id"/>
+                            </group>
+                        </group>
+                        <field name="note" nolabel="1" placeholder="Notes"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="mobile_number_view_kanban" model="ir.ui.view">
+            <field name="name">mobile.number.view.kanban</field>
+            <field name="model">employee.mobile.number</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="mobile_company_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                        <h4 class="mt0 mb0">
+                                            <field name="employee_id"/>
+                                        </h4>
+                                    </strong>
+                                    <div class="o_kanban_record_top">
+                                        <h4 class="mt0 mb0">
+                                            <field name="name"/>
+                                        </h4>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="mobile_company_id"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="mobile_number_view_tree" model="ir.ui.view">
+            <field name="name">mobile.number.view.tree</field>
+            <field name="model">employee.mobile.number</field>
+            <field name="arch" type="xml">
+                <tree string="Mobile Numbers">
+                    <field name="name"/>
+                    <field name="mobile_company_id"/>
+                    <field name="employee_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mobile_number_action" model="ir.actions.act_window">
+            <field name="name">Mobile Numbers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee.mobile.number</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
+        <menuitem id="menu_mobile_number" name="Mobile Numbers" parent="hr.menu_hr_employee_payroll"
+                  action="mobile_number_action"/>
+    </data>
+</odoo>
