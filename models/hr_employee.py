@@ -12,6 +12,19 @@ class HrEmployee(models.Model):
     age = fields.Integer(string="Age", compute="_calculate_age", readonly=True, store='True')
     hire_date = fields.Date(string='Hiring Date')
 
+    _sql_constraints = [
+        (
+            "employee_default_code_uniq",
+            "unique(code)",
+            "Employee Code must be unique across the database!",
+        ),
+        (
+            "employee_identification_id_uniq",
+            "unique(identification_id)",
+            "Employee Identification Id must be unique across the database!",
+        )
+    ]
+
     @api.depends("birthday")
     def _calculate_age(self):
         for emp in self:
@@ -28,7 +41,7 @@ class HrEmployee(models.Model):
     def name_get(self):
         result = []
         for rec in self:
-            name = ('[%s] %s' % (rec.code, rec.name))
+            name = ('[%s][%s] %s' % (rec.code, rec.identification_id, rec.name))
             result.append((rec.id, name))
         return result
 
@@ -38,8 +51,9 @@ class HrEmployee(models.Model):
         # args = args or []
         domain = []
         if name:
-            domain = ['|', ('name', operator, name),
-                      ('code', operator, name), ]
+            domain = ['|', '|', ('name', operator, name),
+                      ('code', operator, name),
+                      ('identification_id', operator, name), ]
         recs = self.search(domain, limit=limit)
         return recs.name_get()
 
