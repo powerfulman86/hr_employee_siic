@@ -12,6 +12,13 @@ class HrEmployee(models.Model):
     age = fields.Integer(string="Age", compute="_calculate_age", readonly=True, store='True')
     hire_date = fields.Date(string='Hiring Date')
 
+    street = fields.Char('Street')
+    street2 = fields.Char('Street2')
+    zip = fields.Char('Zip', change_default=True)
+    city = fields.Char('City')
+    state_id = fields.Many2one("res.country.state", string='State')
+    address_country_id = fields.Many2one('res.country', string='Country')
+
     _sql_constraints = [
         (
             "employee_default_code_uniq",
