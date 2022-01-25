@@ -75,7 +75,7 @@ class HrEmployee(models.Model):
             r.count_courses = len(r.courses_ids)
 
     def action_view_course(self):
-        action = self.env.ref("hr_course.action_view_course")
+        action = self.env.ref("hr_employee_siic.action_view_course")
         result = action.read()[0]
         result["domain"] = [("employee_id", "=", self.id)]
         return result
